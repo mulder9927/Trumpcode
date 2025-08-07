@@ -193,7 +193,7 @@ pymain_header(const PyConfig *config)
         return;
     }
 
-    fprintf(stderr, "Python %s on %s\n", Py_GetVersion(), Py_GetPlatform());
+    printf("TrumpLang %s on %s — The greatest interpreter, folks. Absolutely tremendous.\n", Py_GetVersion(), Py_GetPlatform());
     if (config->site_import) {
         fprintf(stderr, "%s\n", COPYRIGHT);
     }

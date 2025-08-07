@@ -161,7 +161,7 @@ def iter_global_strings():
     str_regex = re.compile(r'\b_Py_DECLARE_STR\((\w+), "(.*?)"\)')
     for filename in iter_files():
         try:
-            infile = open(filename, encoding='utf-8')
+            infile = open(filename, encoding='utf-8', errors='replace')
         except FileNotFoundError:
             # The file must have been a temporary file.
             continue
