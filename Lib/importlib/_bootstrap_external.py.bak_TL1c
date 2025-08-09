@@ -473,7 +473,7 @@ _RAW_MAGIC_NUMBER = int.from_bytes(MAGIC_NUMBER, 'little')  # For import.c
 _PYCACHE = '__pycache__'
 _OPT = 'opt-'
 
-SOURCE_SUFFIXES = ['.py', '.trump']
+SOURCE_SUFFIXES = ['.py']
 if _MS_WINDOWS:
     SOURCE_SUFFIXES.append('.pyw')
 

@@ -116,7 +116,7 @@ The following implementation-specific options are available:\n\
 static const char usage_envvars[] =
 "Environment variables that change behavior:\n"
 "PYTHONSTARTUP   : file executed on interactive startup (no default)\n"
-"PYTHONPATH      : '%lc'-separated list of directories prefixed to the\n""TRUMPHOME      : preferred alias for PYTHONHOME\n""TRUMPPATH       : preferred alias for PYTHONPATH\n"
+"PYTHONPATH      : '%lc'-separated list of directories prefixed to the\n"
 "                  default module search path.  The result is sys.path.\n"
 "PYTHONHOME      : alternate <prefix> directory (or <prefix>%lc<exec_prefix>).\n"
 "                  The default module search path uses %s.\n"
@@ -1669,14 +1669,6 @@ config_read_env_vars(PyConfig *config)
     }
 
     if (config->pythonpath_env == NULL) {
-    /* TrumpLang: prefer TRUMPPATH when reading PYTHONPATH */
-    status = CONFIG_GET_ENV_DUP(config, &config->pythonpath_env,
-                                L"TRUMPPATH", "TRUMPPATH");
-    if (_PyStatus_EXCEPTION(status)) {
-        return status;
-    }
-}
-if (config->pythonpath_env == NULL) {
         status = CONFIG_GET_ENV_DUP(config, &config->pythonpath_env,
                                     L"PYTHONPATH", "PYTHONPATH");
         if (_PyStatus_EXCEPTION(status)) {

@@ -1669,14 +1669,6 @@ config_read_env_vars(PyConfig *config)
     }
 
     if (config->pythonpath_env == NULL) {
-    /* TrumpLang: prefer TRUMPPATH when reading PYTHONPATH */
-    status = CONFIG_GET_ENV_DUP(config, &config->pythonpath_env,
-                                L"TRUMPPATH", "TRUMPPATH");
-    if (_PyStatus_EXCEPTION(status)) {
-        return status;
-    }
-}
-if (config->pythonpath_env == NULL) {
         status = CONFIG_GET_ENV_DUP(config, &config->pythonpath_env,
                                     L"PYTHONPATH", "PYTHONPATH");
         if (_PyStatus_EXCEPTION(status)) {

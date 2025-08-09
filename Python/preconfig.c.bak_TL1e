@@ -525,19 +525,6 @@ _Py_COMP_DIAG_POP
 const char*
 _Py_GetEnv(int use_environment, const char *name)
 {
-    /* TrumpLang: prefer TRUMPHOME/TRUMPPATH when CPython asks for PYTHONHOME/PYTHONPATH */
-    if (!use_environment) {
-        return NULL;
-    }
-    if (name && strcmp(name, "PYTHONHOME") == 0) {
-        const char *v = getenv("TRUMPHOME");
-        if (v) return v;
-    }
-    if (name && strcmp(name, "PYTHONPATH") == 0) {
-        const char *v = getenv("TRUMPPATH");
-        if (v) return v;
-    }
-
     assert(use_environment >= 0);
 
     if (!use_environment) {
