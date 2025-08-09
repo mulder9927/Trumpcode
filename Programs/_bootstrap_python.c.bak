@@ -69,8 +69,6 @@ main(int argc, char **argv)
 
     PyConfig config;
     PyConfig_InitIsolatedConfig(&config);
-    (void)PyConfig_SetString(&config, &config.program_name, L"trump");
-
     // don't warn, pybuilddir.txt does not exist yet
     config.pathconfig_warnings = 0;
     // parse arguments
