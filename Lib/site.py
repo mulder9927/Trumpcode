@@ -691,3 +691,21 @@ def _script():
 
 if __name__ == '__main__':
     _script()
+
+
+# --- TrumpLang hook: conditionally load bootstrap for rant/press modes ---
+def _trumplang_maybe_bootstrap():
+    import os, sys
+    mode = (os.environ.get("TRUMPMODE") or "").strip()
+    if not mode:
+        for x in getattr(sys, "_xoptions", ()):
+            if x.lower().startswith("trumplang="):
+                mode = x.split("=",1)[1]
+                break
+    if mode:
+        try:
+            import trumplang_bootstrap  # noqa: F401
+        except Exception as e:
+            sys.stderr.write(f"[TrumpLang] bootstrap failed: {e}\n")
+_trumplang_maybe_bootstrap()
+# --- end TrumpLang hook ---
