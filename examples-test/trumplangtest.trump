@@ -1,0 +1,14 @@
+# TrumpLang demo: prints + a deliberate error at the end
+def square(n):
+    print("squaring", n)
+    return n*n
+
+print("starting demo")
+for i in range(3):
+    print("square:", square(i))
+
+def boom():
+    print("about to do something very risky")
+    return 1/0  # trigger an error for press mode
+
+boom()
