@@ -484,6 +484,7 @@ PYTHON_OBJS=	\
 		Python/pymath.o \
 		Python/pystate.o \
 		Python/pythonrun.o \
+		Python/trump_preprocess.o \
 		Python/pytime.o \
 		Python/qsbr.o \
 		Python/bootstrap_hash.o \
@@ -983,6 +984,12 @@ clinic-tests: check-clean-src $(srcdir)/Lib/test/clinic.test.c
 # Build the interpreter
 $(BUILDPYTHON):	Programs/python.o $(LINK_PYTHON_DEPS)
 	$(LINKCC) $(PY_CORE_LDFLAGS) $(LINKFORSHARED) -o $@ Programs/python.o $(LINK_PYTHON_OBJS) $(LIBS) $(MODLIBS) $(SYSLIBS)
+
+# TrumpLang: build 'trump' binary alongside 'python3'
+trump$(BUILDEXE): $(BUILDPYTHON)
+	$(LN) -f $(BUILDPYTHON) trump$(BUILDEXE)
+
+trump: trump$(BUILDEXE)
 
 platform: $(PYTHON_FOR_BUILD_DEPS) pybuilddir.txt
 	$(RUNSHARED) $(PYTHON_FOR_BUILD) -c 'import sys ; from sysconfig import get_platform ; print("%s-%d.%d" % (get_platform(), *sys.version_info[:2]))' >platform

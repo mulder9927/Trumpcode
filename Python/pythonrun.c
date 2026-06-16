@@ -10,6 +10,7 @@
 
 #include "Python.h"
 
+#include "pycore_trump.h"         // _Trump_PreprocessSource(), _Trump_IsTrumpFile()
 #include "pycore_ast.h"           // PyAST_mod2obj()
 #include "pycore_audit.h"         // _PySys_Audit()
 #include "pycore_ceval.h"         // _Py_EnterRecursiveCall()
@@ -1281,11 +1282,82 @@ pyrun_file(FILE *fp, PyObject *filename, int start, PyObject *globals,
     }
 
     mod_ty mod;
-    mod = _PyParser_ASTFromFile(fp, filename, NULL, start, NULL, NULL,
-                                flags, NULL, arena);
 
-    if (closeit) {
-        fclose(fp);
+    if (_Trump_IsTrumpFile(filename)) {
+        /* ── TrumpLang path ────────────────────────────────────────────────
+         * Read the entire .trump source, substitute Trump phrases → Python
+         * keywords in memory, then parse from the resulting string.
+         * No .py file is ever written — the source never leaves RAM.
+         * Install a Trump-flavored sys.excepthook before execution so all
+         * error output matches the language.
+         * ─────────────────────────────────────────────────────────────────*/
+
+        /* Install Trump error hook — runs before user code, doesn't shift line numbers */
+        PyRun_SimpleString(
+            "def _trump_excepthook(etype, value, tb):\n"
+            "    import sys, traceback\n"
+            "    _headers = [\n"
+            "        'TOTAL DISASTER (most recent betrayal listed last):',\n"
+            "        'SOMETHING WENT WRONG, FOLKS (most recent catastrophe listed last):',\n"
+            "        'YOU WON\\'T BELIEVE THIS (most recent disaster listed last):',\n"
+            "        'MANY BAD THINGS HAPPENED (most recent, listed last):',\n"
+            "        'FAKE CODE DETECTED (most recent failure listed last):',\n"
+            "        'THE DEEP STATE DID THIS (most recent interference listed last):',\n"
+            "    ]\n"
+            "    sys.stderr.write(_headers[id(etype) % len(_headers)] + '\\n')\n"
+            "    traceback.print_tb(tb, file=sys.stderr)\n"
+            "    _msg = str(value)\n"
+            "    sys.stderr.write(f'{etype.__name__}: {_msg}\\n' if _msg else f'{etype.__name__}\\n')\n"
+            "import sys\n"
+            "sys.excepthook = _trump_excepthook\n"
+            "del _trump_excepthook\n"
+        );
+
+        if (fseek(fp, 0, SEEK_END) == 0) {
+            long fsize = ftell(fp);
+            rewind(fp);
+            if (fsize > 0) {
+                char *raw = (char *)PyMem_RawMalloc((size_t)fsize + 1);
+                if (raw != NULL) {
+                    size_t nread = fread(raw, 1, (size_t)fsize, fp);
+                    raw[nread] = '\0';
+                    if (closeit) { fclose(fp); fp = NULL; }
+
+                    char *processed = _Trump_PreprocessSource(raw);
+                    PyMem_RawFree(raw);
+
+                    if (processed != NULL) {
+                        mod = _PyParser_ASTFromString(
+                            processed, filename, start, flags, arena);
+                        PyMem_RawFree(processed);
+                    } else {
+                        PyErr_NoMemory();
+                        mod = NULL;
+                    }
+                } else {
+                    PyErr_NoMemory();
+                    mod = NULL;
+                    if (closeit && fp) { fclose(fp); fp = NULL; }
+                }
+            } else {
+                /* Empty file */
+                mod = _PyParser_ASTFromString(
+                    "", filename, start, flags, arena);
+                if (closeit && fp) { fclose(fp); fp = NULL; }
+            }
+        } else {
+            PyErr_SetFromErrno(PyExc_OSError);
+            mod = NULL;
+            if (closeit && fp) { fclose(fp); fp = NULL; }
+        }
+    }
+    else {
+        /* ── Standard Python path ──────────────────────────────────────── */
+        mod = _PyParser_ASTFromFile(fp, filename, NULL, start, NULL, NULL,
+                                    flags, NULL, arena);
+        if (closeit) {
+            fclose(fp);
+        }
     }
 
     PyObject *ret;
