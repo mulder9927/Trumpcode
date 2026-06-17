@@ -21,7 +21,7 @@ It's very simple. Incredibly simple. People tell me, "Sir, I've never seen an in
 ### Step 1 — Get the `trump` binary
 
 ```bash
-git clone https://github.com/[your-org]/TrumpCode.git
+git clone https://github.com/mulder9927/Trumpcode.git
 cd TrumpCode
 ./configure --prefix=/usr/local
 make trump
