@@ -37,9 +37,12 @@ I'VE BEEN SAYING THIS FOR A LONG TIME process(data):
 - `LET ME TELL YOU`
 - `NOBODY KNOWS MORE ABOUT THIS THAN ME`
 - `I'VE BEEN SAYING THIS FOR A LONG TIME`
+- `NOBODY TALKS ABOUT THIS ENOUGH`
 - `I'M THE BEST AT`
 - `SO IMPORTANT, LISTEN`
 - `MANY PEOPLE DON'T KNOW THIS BUT`
+- `EVERYONE AGREES`
+- `SO IMPORTANT`
 
 **All valid phrases for `return`:**
 - `IT'S GONNA BE HUGE`
@@ -47,6 +50,8 @@ I'VE BEEN SAYING THIS FOR A LONG TIME process(data):
 - `WE'RE DONE HERE`
 - `BEAUTIFUL RESULT`
 - `AND THAT'S THE WINNER`
+- `EVERYBODY SAYS IT WORKS`
+- `NOBODY RETURNS BETTER THAN ME`
 - `WINNING`
 
 ---
@@ -65,10 +70,14 @@ MANY PEOPLE ARE SAYING:
 **All valid phrases for `if`:**
 - `IF YOU LOOK AT IT`
 - `MANY PEOPLE ARE STARTING TO SEE`
+- `PEOPLE ARE STARTING TO NOTICE`
 - `FRANKLY, IF`
 - `I'LL TELL YOU WHAT, IF`
 - `SOME PEOPLE ARE SAYING`
+- `SOME PEOPLE WON'T SAY IT`
 - `LOOK, THE TRUTH IS`
+- `THIS I CAN TELL YOU`
+- `IT'S OBVIOUS`
 
 **All valid phrases for `elif`:**
 - `BUT ALSO CONSIDER`
@@ -80,10 +89,13 @@ MANY PEOPLE ARE SAYING:
 **All valid phrases for `else`:**
 - `MANY PEOPLE ARE SAYING`
 - `FAKE NEWS WOULD SAY`
+- `NOBODY KNOWS FOR SURE`
+- `ALTERNATIVE FACT`
 - `ON THE OTHER HAND`
 - `BUT SOME LOSERS THINK`
 - `COULD BE WRONG, BUT`
 - `ALTERNATIVELY`
+- `WE'LL SEE`
 
 ---
 
@@ -101,6 +113,7 @@ WE'RE GONNA KEEP GOING counter IS SMALLER THAN 5:
 **All valid phrases for `while`:**
 - `WE'RE GONNA KEEP GOING`
 - `NEVER GIVE UP`
+- `KEEP IT GOING`
 - `CAN'T STOP WON'T STOP`
 - `WE'RE IN THIS TOGETHER`
 - `KEEP AMERICA GREAT`
@@ -130,6 +143,7 @@ LOOKING AT EVERY SINGLE i IN range(10):
 **Break (`break`):**
 - `STOP THE COUNT`
 - `SHUT IT DOWN`
+- `I NEVER SAID THAT`
 - `TOTAL SHUTDOWN`
 - `WE'RE DONE HERE, STOP`
 - `ENOUGH`
@@ -320,6 +334,7 @@ All print phrases:
 - `LOOK, FOLKS`
 - `SADLY`
 - `YOU WON'T BELIEVE THIS`
+- `FAKE NEWS SAYS`
 - `I'M TELLING YOU`
 - `EVERYBODY NEEDS TO KNOW`
 - `I SAID IT FIRST`
@@ -418,6 +433,48 @@ EPSTEIN LIST
 ```
 
 This calls `raise SystemExit(1138)`. **Do not use this casually.** It ends the program. Completely.
+
+---
+
+## The Rant Feature
+
+TrumpLang has opinions. Every **third `print` call** in a `.trump` program automatically appends a Trump commentary line. You don't ask for it. You don't configure it. It just happens — like a press conference.
+
+```
+Hello, America!
+The numbers are incredible.
+We are winning bigly.
+  >> A lot of people don't get it. Smart people do.
+```
+
+The rant rotates through a pool of Trump phrases. If the output contains trigger words (`CNN`, `HILLARY`, `FAKE`, `RIGGED`, `DOMINION`, etc.) a *negative rant* fires instead:
+
+```
+CNN is terrible.
+  >> Even the fake news had to admit it was great.
+```
+
+This is not a bug. This is the feature.
+
+---
+
+## BIGLY — The Block Opener
+
+In standard Python every block header ends with a colon (`:`). In TrumpLang you can use `BIGLY` instead. It's optional — a regular colon still works — but `BIGLY` is the way winners do it.
+
+```trump
+LET ME TELL YOU greet(name) BIGLY
+    LOOK, FOLKS("Hello,", name)
+
+KEEP IT GOING counter IS SMALLER THAN 10 BIGLY
+    counter = counter + 1
+
+MAKE AMERICA GREAT AGAIN Dog BIGLY
+    LET ME TELL YOU __init__(self, name) BIGLY
+        self.name = name
+```
+
+> `BIGLY` maps to `:` — it goes wherever a colon would go. After a function definition, class definition, if/elif/else/while/for header, try/except/finally, or with statement. Anywhere Python expects a colon, BIGLY works.
 
 ---
 
