@@ -158,9 +158,27 @@ But if your code is bad — and some of it will be, that's just statistics — w
 
 ---
 
+## What Changed From CPython
+
+TrumpLang adds the following to CPython 3.15:
+
+- `Python/trump_preprocess.c` — Trump-phrase pre-processor (longest-match string substitution)
+- `Include/internal/pycore_trump.h` — pre-processor header
+- `Python/pythonrun.c` — hook in `pyrun_file()` to detect `.trump` extension and invoke pre-processor
+- `Makefile` — `make trump` target that builds and hard-links the `trump` binary
+- `Programs/trump_main.c` — `trump` binary entry point
+
+No changes were made to the CPython parser, compiler, runtime, or standard library.
+
+---
+
 ## License
 
-MIT. Like all the best things.
+TrumpLang is a derivative of CPython and is distributed under the **Python Software Foundation License Version 2** — the same license that governs CPython itself.
+
+The full license text is in [LICENSE](LICENSE).
+
+The PSF License is permissive: you can use, modify, and distribute this project (including commercially) as long as you retain the PSF copyright notice. No copyleft. No catch.
 
 *"Open source is very important. Very important. I've always said that. Long before anyone else."*
 
