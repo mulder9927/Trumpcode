@@ -1292,8 +1292,11 @@ pyrun_file(FILE *fp, PyObject *filename, int start, PyObject *globals,
          * error output matches the language.
          * ─────────────────────────────────────────────────────────────────*/
 
-        /* Install Trump error hook — runs before user code, doesn't shift line numbers */
+        /* Install Trump runtime hooks — error messages + rant output layer */
         PyRun_SimpleString(
+            "import sys as _sys, builtins as _bi\n"
+
+            /* ── Trump-flavored exception hook ── */
             "def _trump_excepthook(etype, value, tb):\n"
             "    import sys, traceback\n"
             "    _headers = [\n"
@@ -1308,9 +1311,44 @@ pyrun_file(FILE *fp, PyObject *filename, int start, PyObject *globals,
             "    traceback.print_tb(tb, file=sys.stderr)\n"
             "    _msg = str(value)\n"
             "    sys.stderr.write(f'{etype.__name__}: {_msg}\\n' if _msg else f'{etype.__name__}\\n')\n"
-            "import sys\n"
-            "sys.excepthook = _trump_excepthook\n"
-            "del _trump_excepthook\n"
+            "_sys.excepthook = _trump_excepthook\n"
+
+            /* ── Rant layer — wraps print() with periodic Trump commentary ── */
+            "_TRUMP_RANTS = [\n"
+            "    'Many people are saying this is the best output. Possibly ever.',\n"
+            "    'Tremendous. Nobody does output like this. Nobody.',\n"
+            "    'They tried to replicate this. Failed. Totally failed.',\n"
+            "    'I knew it would be beautiful. And it is.',\n"
+            "    'Even the fake news had to admit it was great.',\n"
+            "    'People are crying. It\\'s so good.',\n"
+            "    'The most successful output in history. Some say.',\n"
+            "    'We\\'re winning so much. Even this output wins.',\n"
+            "    'A lot of people don\\'t get it. Smart people do.',\n"
+            "    'Incredible numbers. Just incredible.',\n"
+            "    'So important. Very very important output.',\n"
+            "    'This is what winning looks like, folks.',\n"
+            "]\n"
+            "_TRUMP_NEG_RANTS = [\n"
+            "    'Total disaster. Just ask CNN.',\n"
+            "    'Crooked output. We\\'re looking into it.',\n"
+            "    'Disgraceful. Like Hillary\\'s emails.',\n"
+            "    'This is what happens when Sleepy Joe touches the keyboard.',\n"
+            "    'Fake output. Rigged. Completely rigged.',\n"
+            "    'The worst. Nobody has seen anything this bad. Nobody.',\n"
+            "]\n"
+            "_TRUMP_RANT_COUNTER = [0]\n"
+            "_ORIG_PRINT = _bi.print\n"
+            "def _trump_print(*args, **kwargs):\n"
+            "    _ORIG_PRINT(*args, **kwargs)\n"
+            "    _TRUMP_RANT_COUNTER[0] += 1\n"
+            "    if _TRUMP_RANT_COUNTER[0] % 3 == 0:\n"  /* every 3rd print gets a rant */
+            "        _txt = ' '.join(str(a) for a in args)\n"
+            "        _neg = any(x in _txt.upper() for x in ['CNN','HILLARY','SLEEPY','DOMINION','WITCH','FAKE','RIGGED'])\n"
+            "        _pool = _TRUMP_NEG_RANTS if _neg else _TRUMP_RANTS\n"
+            "        _ORIG_PRINT('  >>', _pool[id(_txt) % len(_pool)])\n"
+            "_bi.print = _trump_print\n"
+
+            "del _sys, _bi, _trump_excepthook\n"
         );
 
         if (fseek(fp, 0, SEEK_END) == 0) {

@@ -32,10 +32,13 @@ static const TrumpEntry _trump_phrases[] = {
     /* def */
     {"I'VE BEEN SAYING THIS FOR A LONG TIME",   "def"},
     {"NOBODY KNOWS MORE ABOUT THIS THAN ME",     "def"},
+    {"NOBODY TALKS ABOUT THIS ENOUGH",           "def"},
     {"MANY PEOPLE DON'T KNOW THIS BUT",          "def"},
     {"SO IMPORTANT, LISTEN",                     "def"},
     {"LET ME TELL YOU",                          "def"},
     {"I'M THE BEST AT",                          "def"},
+    {"EVERYONE AGREES",                          "def"},
+    {"SO IMPORTANT",                             "def"},
 
     /* class */
     {"A TREMENDOUS ORGANIZATION CALLED",         "class"},
@@ -55,11 +58,15 @@ static const TrumpEntry _trump_phrases[] = {
     {"WINNING",                                  "return"},
 
     /* if */
+    {"PEOPLE ARE STARTING TO NOTICE",            "if"},
     {"MANY PEOPLE ARE STARTING TO SEE",          "if"},
     {"I'LL TELL YOU WHAT, IF",                   "if"},
+    {"SOME PEOPLE WON'T SAY IT",                 "if"},
     {"SOME PEOPLE ARE SAYING",                   "if"},
+    {"THIS I CAN TELL YOU",                      "if"},
     {"LOOK, THE TRUTH IS",                       "if"},
     {"IF YOU LOOK AT IT",                        "if"},
+    {"IT'S OBVIOUS",                             "if"},
     {"FRANKLY, IF",                              "if"},
 
     /* elif */
@@ -73,9 +80,12 @@ static const TrumpEntry _trump_phrases[] = {
     {"FAKE NEWS WOULD SAY",                      "else"},
     {"BUT SOME LOSERS THINK",                    "else"},
     {"MANY PEOPLE ARE SAYING",                   "else"},
+    {"NOBODY KNOWS FOR SURE",                    "else"},
+    {"ALTERNATIVE FACT",                         "else"},
     {"COULD BE WRONG, BUT",                      "else"},
     {"ON THE OTHER HAND",                        "else"},
     {"ALTERNATIVELY",                            "else"},
+    {"WE'LL SEE",                                "else"},
 
     /* while */
     {"CAN'T STOP WON'T STOP",                   "while"},
@@ -83,6 +93,7 @@ static const TrumpEntry _trump_phrases[] = {
     {"WE'RE GONNA KEEP GOING",                   "while"},
     {"KEEP AMERICA GREAT",                       "while"},
     {"NEVER GIVE UP",                            "while"},
+    {"KEEP IT GOING",                            "while"},
     {"AGAIN AND AGAIN",                          "while"},
 
     /* for */
@@ -101,6 +112,7 @@ static const TrumpEntry _trump_phrases[] = {
 
     /* break */
     {"WE'RE DONE HERE, STOP",                    "break"},
+    {"I NEVER SAID THAT",                        "break"},
     {"TOTAL SHUTDOWN",                           "break"},
     {"STOP THE COUNT",                           "break"},
     {"SHUT IT DOWN",                             "break"},
@@ -307,9 +319,13 @@ static const TrumpEntry _trump_phrases[] = {
     {"IS LESS THAN OR EQUAL TO",                 "<="},
     {"IS AT MOST",                               "<="},
 
+    /* colon — BIGLY closes a block header line: "LET ME TELL YOU foo(x) BIGLY" */
+    {"BIGLY",                                    ":"},
+
     /* print (builtin — maps to print function name) */
     {"EVERYBODY NEEDS TO KNOW",                  "print"},
     {"YOU WON'T BELIEVE THIS",                   "print"},
+    {"FAKE NEWS SAYS",                           "print"},
     {"I'M TELLING YOU",                          "print"},
     {"I SAID IT FIRST",                          "print"},
     {"LOOK, FOLKS",                              "print"},
